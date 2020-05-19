@@ -1,0 +1,256 @@
+---
+dyndns_olafnorge_de_compose:
+  version: "3.7"
+  services:
+    dyndns:
+      deploy:
+        labels: "{{ dyndns_olafnorge_de_labels }}"
+        placement:
+          constraints:
+            - node.role != manager
+        mode: global
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      environment:
+        - APP_DEBUG={{ dyndns_olafnorge_de_environment.app_debug | default('false') }}
+        - APP_ENV={{ dyndns_olafnorge_de_environment.app_env | default('development') }}
+        - APP_FALLBACK_LOCALE={{ dyndns_olafnorge_de_environment.app_fallback_locale | default('en') }}
+        - APP_HOST={{ dyndns_olafnorge_de_environment.app_host | default('dyndns.example.com') }}
+        - APP_KEY={{ dyndns_olafnorge_de_environment.app_key }}
+        - APP_LOCALE={{ dyndns_olafnorge_de_environment.app_locale | default('en') }}
+        - AUTH_GUARD={{ dyndns_olafnorge_de_environment.auth_guard | default('api') }}
+        - BROADCAST_DRIVER={{ dyndns_olafnorge_de_environment.broadcast_driver | default('pusher') }}
+        - BROADCAST_REDIS_CONNECTION={{ dyndns_olafnorge_de_environment.broadcast_redis_connection | default('default') }}
+        - CACHE_DATABASE_CONNECTION={{ dyndns_olafnorge_de_environment.cache_database_connection | default('null') }}
+        - CACHE_DATABASE_TABLE={{ dyndns_olafnorge_de_environment.cache_database_table | default('cache') }}
+        - CACHE_DRIVER={{ dyndns_olafnorge_de_environment.cache_driver | default('file') }}
+        - CACHE_PREFIX={{ dyndns_olafnorge_de_environment.cache_prefix | default('dyndns') }}
+        - CACHE_REDIS_CONNECTION={{ dyndns_olafnorge_de_environment.cache_redis_connection | default('default') }}
+        - DB_CHARSET={{ dyndns_olafnorge_de_environment.db_charset | default('utf8mb4') }}
+        - DB_COLLATION={{ dyndns_olafnorge_de_environment.db_collation | default('utf8mb4_unicode_ci') }}
+        - DB_CONNECTION={{ dyndns_olafnorge_de_environment.db_connection | default('mysql') }}
+        - DB_DATABASE={{ dyndns_olafnorge_de_environment.db_database | default('dyndns') }}
+        - DB_HOST={{ dyndns_olafnorge_de_environment.db_host | default('database') }}
+        - DB_PASSWORD={{ dyndns_olafnorge_de_environment.db_password }}
+        - DB_PORT={{ dyndns_olafnorge_de_environment.db_port | default('3306') }}
+        - DB_PREFIX={{ dyndns_olafnorge_de_environment.db_prefix | default('') }}
+        - DB_SCHEMA={{ dyndns_olafnorge_de_environment.db_schema | default('public') }}
+        - DB_STRICT_MODE={{ dyndns_olafnorge_de_environment.db_strict_mode | default('false') }}
+        - DB_TIMEZONE={{ dyndns_olafnorge_de_environment.db_timezone | default('+00:00') }}
+        - DB_USERNAME={{ dyndns_olafnorge_de_environment.db_username | default('dyndns') }}
+        - DYNDNS_CLOUDFLARE_APIKEY={{ dyndns_olafnorge_de_environment.dyndns_cloudflare_apikey }}
+        - DYNDNS_CLOUDFLARE_EMAIL={{ dyndns_olafnorge_de_environment.dyndns_cloudflare_email | default('user@example.com') }}
+        - DYNDNS_CLOUDFLARE_PROXIED={{ dyndns_olafnorge_de_environment.dyndns_cloudflare_proxied | default('false') }}
+        - DYNDNS_TTL={{ dyndns_olafnorge_de_environment.dyndns_ttl | default('120') }}
+        - LOCK_DRIVER={{ dyndns_olafnorge_de_environment.lock_driver | default('semaphore') }}
+        - LOCK_REDIS_CONNECTION={{ dyndns_olafnorge_de_environment.lock_redis_connection | default('default') }}
+        - LOG_CHANNEL={{ dyndns_olafnorge_de_environment.log_channel | default('stack') }}
+        - LOG_LEVEL={{ dyndns_olafnorge_de_environment.log_level | default('debug') }}
+        - LOG_SLACK_WEBHOOK_URL={{ dyndns_olafnorge_de_environment.log_slack_webhook_url | default('null') }}
+        - LOG_STACK_CHANNELS={{ dyndns_olafnorge_de_environment.log_stack_channels | default('[]') | join(',') }}
+        - MEMCACHED_HOST={{ dyndns_olafnorge_de_environment.memcached_host | default('127.0.0.1') }}
+        - MEMCACHED_PORT={{ dyndns_olafnorge_de_environment.memcached_port | default('11211') }}
+        - PUSHER_APP_ID={{ dyndns_olafnorge_de_environment.pusher_app_id | default('null') }}
+        - PUSHER_KEY={{ dyndns_olafnorge_de_environment.pusher_key | default('null') }}
+        - PUSHER_SECRET={{ dyndns_olafnorge_de_environment.pusher_secret | default('null') }}
+        - QUEUE_DRIVER={{ dyndns_olafnorge_de_environment.queue_driver | default('sync') }}
+        - QUEUE_FAILED_TABLE={{ dyndns_olafnorge_de_environment.queue_failed_table | default('failed_jobs') }}
+        - QUEUE_REDIS_CONNECTION={{ dyndns_olafnorge_de_environment.queue_redis_connection | default('default') }}
+        - REDIS_CLIENT={{ dyndns_olafnorge_de_environment.redis_client | default('predis') }}
+        - REDIS_CLUSTER={{ dyndns_olafnorge_de_environment.redis_cluster | default('false') }}
+        - REDIS_DATABASE={{ dyndns_olafnorge_de_environment.redis_database | default('0') }}
+        - REDIS_HOST={{ dyndns_olafnorge_de_environment.redis_host | default('redis') }}
+        - REDIS_PASSWORD={{ dyndns_olafnorge_de_environment.redis_password | default('null') }}
+        - REDIS_PORT={{ dyndns_olafnorge_de_environment.redis_port | default('6379') }}
+        - ROLLBAR_BRANCH={{ dyndns_olafnorge_de_environment.rollbar_branch | default('master') }}
+        - ROLLBAR_CODE_VERSION={{ dyndns_olafnorge_de_environment.rollbar_code_version | default('master') }}
+        - ROLLBAR_ENABLED={{ dyndns_olafnorge_de_environment.rollbar_enabled | default('false') }}
+        - ROLLBAR_ENVIRONMENT={{ dyndns_olafnorge_de_environment.app_env | default('development') }}
+        - ROLLBAR_FRAMEWORK=lumen
+        - ROLLBAR_HOST={{ dyndns_olafnorge_de_environment.app_host | default('dyndns.example.com') }}
+        - ROLLBAR_LEVEL={{ dyndns_olafnorge_de_environment.log_level | default('debug') }}
+        - ROLLBAR_TOKEN={{ dyndns_olafnorge_de_environment.rollbar_token | default('' | hash('md5')) }}
+        - SQS_SECRET_KEY={{ dyndns_olafnorge_de_environment.sqs_secret_key | default('') }}
+      image: "olafnorge/dyndns:{{ dyndns_olafnorge_de_version }}"
+      networks: "{{ dyndns_olafnorge_de_networks }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    database:
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      environment:
+        - MYSQL_DATABASE={{ dyndns_olafnorge_de_environment.db_database | default('dyndns') }}
+        - MYSQL_USER={{ dyndns_olafnorge_de_environment.db_username | default('dyndns') }}
+        - MYSQL_PASSWORD{{ '_FILE' if dyndns_olafnorge_de_use_secrets else '' }}={{ '/run/secrets/' if dyndns_olafnorge_de_use_secrets else '' }}{{ dyndns_olafnorge_de_environment.db_password | default('') }}
+        - MYSQL_ROOT_PASSWORD{{ '_FILE' if dyndns_olafnorge_de_use_secrets else '' }}={{ '/run/secrets/' if dyndns_olafnorge_de_use_secrets else '' }}{{ dyndns_olafnorge_de_environment.db_root_password | default('') }}
+      image: mysql:5.7
+      networks:
+        - "{{ dyndns_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    redis:
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      image: redis:4-alpine
+      networks:
+        - "{{ dyndns_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+    xtrabackup:
+      command: cron -f -l -L15
+      configs:
+        - source: "dyndns-crontab-{{ dyndns_olafnorge_de_crontab_templated.checksum[:10] }}"
+          target: /etc/cron.d/crontab
+          uid: '0'
+          gid: '0'
+          mode: 0644
+      deploy:
+        placement:
+          constraints:
+            - node.role != manager
+        replicas: 1
+        restart_policy:
+          condition: on-failure
+          delay: 5s
+          max_attempts: 5
+          window: 300s
+        update_config:
+          failure_action: rollback
+          monitor: 120s
+      image: olafnorge/xtrabackup:2.4
+      networks:
+        - "{{ dyndns_olafnorge_de_network_internal }}"
+      volumes:
+        - /etc/localtime:/etc/localtime:ro
+        - /etc/timezone:/etc/timezone:ro
+  networks: "{{ dyndns_olafnorge_de_network_definitions }}"
+  configs: "{{ dyndns_olafnorge_de_configs_dict }}"
+
+dyndns_olafnorge_de_crontab_path: "/root/{{ dyndns_olafnorge_de_name }}-crontab"
+dyndns_olafnorge_de_labels: []
+dyndns_olafnorge_de_crons:
+  - interval: '* * * * *'
+    user: root
+    command: echo 'every minute'
+dyndns_olafnorge_de_name: dyndnsolafnorgede
+dyndns_olafnorge_de_network_definitions: []
+dyndns_olafnorge_de_network_internal: internal
+dyndns_olafnorge_de_networks:
+  - "{{ dyndns_olafnorge_de_network_internal }}"
+dyndns_olafnorge_de_use_secrets: yes
+dyndns_olafnorge_de_version: latest
+
+dyndns_olafnorge_de_environment:
+  app_debug: "false"
+  app_env: production
+  app_fallback_locale: en
+  app_host: dyndns.example.com
+  app_key: "{{ dyndns_olafnorge_de_secrets.app_key.name if dyndns_olafnorge_de_use_secrets else dyndns_olafnorge_de_app_key }}"
+  app_locale: en
+  auth_guard: api
+  broadcast_driver: pusher
+  broadcast_redis_connection: default
+  cache_database_connection: "null"
+  cache_database_table: cache
+  cache_driver: redis
+  cache_prefix: dyndns
+  cache_redis_connection: default
+  db_charset: utf8mb4
+  db_collation: utf8mb4_unicode_ci
+  db_connection: mysql
+  db_database: dyndns
+  db_host: database
+  db_password: "{{ dyndns_olafnorge_de_secrets.db_password.name if dyndns_olafnorge_de_use_secrets else dyndns_olafnorge_de_db_password }}"
+  db_port: 3306
+  db_prefix: ""
+  db_root_password: "{{ dyndns_olafnorge_de_secrets.db_root_password.name if dyndns_olafnorge_de_use_secrets else dyndns_olafnorge_de_db_root_password }}"
+  db_schema: public
+  db_strict_mode: "false"
+  db_timezone: "+00:00"
+  db_username: dyndns
+  dyndns_cloudflare_apikey: "{{ dyndns_olafnorge_de_secrets.cloudflare_apikey.name if dyndns_olafnorge_de_use_secrets else dyndns_olafnorge_de_cloudflare_apikey }}"
+  dyndns_cloudflare_email: user@example.com
+  dyndns_cloudflare_proxied: "false"
+  dyndns_ttl: 120
+  lock_driver: redis
+  lock_redis_connection: default
+  log_channel: stack
+  log_level: error
+  log_slack_webhook_url: "null"
+  log_stack_channels:
+    - errorlog
+    - rollbar
+  memcached_host: 127.0.0.1
+  memcached_port: 11211
+  pusher_app_id: "null"
+  pusher_key: "null"
+  pusher_secret: "null"
+  queue_driver: sync
+  queue_failed_table: failed_jobs
+  queue_redis_connection: default
+  redis_client: phpredis
+  redis_cluster: "false"
+  redis_database: 0
+  redis_host: "redis"
+  redis_password: "null"
+  redis_port: 6379
+  rollbar_branch: "{{ dyndns_olafnorge_de_version }}"
+  rollbar_code_version: "{{ dyndns_olafnorge_de_version }}"
+  rollbar_enabled: "true"
+  rollbar_token: "{{ dyndns_olafnorge_de_secrets.rollbar_token.name if dyndns_olafnorge_de_use_secrets else dyndns_olafnorge_de_rollbar_token }}"
+  sqs_secret_key: ""
+
+dyndns_olafnorge_de_secrets:
+  app_key:
+    data: "{{ dyndns_olafnorge_de_app_key }}"
+    name: dyndns_olafnorge_de_app_key
+  cloudflare_apikey:
+    data: "{{ dyndns_olafnorge_de_cloudflare_apikey }}"
+    name: dyndns_olafnorge_de_cloudflare_apikey
+  db_password:
+    data: "{{ dyndns_olafnorge_de_db_password }}"
+    name: dyndns_olafnorge_de_db_password
+  db_root_password:
+    data: "{{ dyndns_olafnorge_de_db_root_password }}"
+    name: dyndns_olafnorge_de_db_root_password
+  rollbar_token:
+    data: "{{ dyndns_olafnorge_de_rollbar_token }}"
+    name: dyndns_olafnorge_de_rollbar_token
+
+# vaults, you may define them in a separate file which overrides these defaults
+dyndns_olafnorge_de_app_key: # FIXME: add your vault here using 'ansible-vault'
+dyndns_olafnorge_de_cloudflare_apikey: # FIXME: add your vault here using 'ansible-vault'
+dyndns_olafnorge_de_db_password: # FIXME: add your vault here using 'ansible-vault'
+dyndns_olafnorge_de_db_root_password: # FIXME: add your vault here using 'ansible-vault'
+dyndns_olafnorge_de_rollbar_token: # FIXME: add your vault here using 'ansible-vault'
